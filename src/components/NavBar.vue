@@ -1,7 +1,7 @@
 <template>
 <nav class="shadow-sm bg-primary text-light border-bottom">
   <ul class="w-100 d-flex flex-row align-items-center">
-    <li class="date position-absolute font-weight-light"> {{ day }} </li>
+    <li class="date position-absolute font-weight-light d-none d-md-block"> {{ day }} </li>
     <li class="time m-auto font-weight-bold"> {{ time }} </li>
   </ul>
 </nav>
