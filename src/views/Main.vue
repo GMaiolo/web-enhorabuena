@@ -3,33 +3,37 @@
   <section class="wrapper w-100 h-100 d-flex align-items-top justify-content-center">
     <!-- left side -->
     <div class="btn-container m-2" v-show="!isShowingExpensesTable">
-      <button class="circled btn btn-primary mt-3 mb-4" @click="openSalesModal">
+      <h3 class="mb-3">Agregar Venta</h3>
+      <button class="circled btn btn-primary" @click="openSalesModal">
         <font-awesome-icon icon="plus" size="3x" />
       </button>
-      <h3 class="mb-3">Agregar Venta</h3>
-      <router-link to="/sales" tag="button" class="text-light btn btn-primary mr-auto" v-if="!isShowingSalesTable">
-        <font-awesome-icon icon="th-list" class="mr-1" /> Ver Ventas
-      </router-link>
-      <router-link to="/" tag="button" class="btn btn-primary text-light d-inline-flex align-items-center" v-else>
-        <font-awesome-icon icon="arrow-left" />
-        <span class="ml-2">Volver</span>
-      </router-link>
+      <div class="links mt-5">
+        <router-link to="/sales" v-if="!isShowingSalesTable">
+          <font-awesome-icon icon="th-list" class="mr-1" /> Ver Ventas
+        </router-link>
+        <router-link to="/" class="d-inline-flex align-items-center" v-else>
+          <font-awesome-icon icon="arrow-left" />
+          <span class="ml-2">Volver</span>
+        </router-link>
+      </div>
     </div>
     <!-- middle -->
     <div class="vertical-rule bg-light mr-5 ml-5" v-show="isVanillaRoute"></div>
     <!-- right side -->
     <div class="btn-container m-2" v-show="!isShowingSalesTable">
-      <button class="circled btn btn-primary mt-3 mb-4" @click="openExpensesModal">
+      <h3 class="mb-3">Agregar Gasto</h3>
+      <button class="circled btn btn-primary" @click="openExpensesModal">
         <font-awesome-icon icon="plus" size="3x" />
       </button>
-      <h3 class="mb-3">Agregar Gasto</h3>
-      <router-link to="/expenses" tag="button" class="text-light btn btn-primary" v-if="!isShowingExpensesTable">
-        <font-awesome-icon icon="th-list" class="mr-1" /> Ver Gastos
-      </router-link>
-      <router-link to="/" tag="button" class="btn btn-primary text-light d-inline-flex align-items-center" v-else>
-        <font-awesome-icon icon="arrow-left" />
-        <span class="ml-2">Volver</span>
-      </router-link>
+      <div class="links mt-5">
+        <router-link to="/expenses" class="" v-if="!isShowingExpensesTable">
+          <font-awesome-icon icon="th-list" class="mr-1" /> Ver Gastos
+        </router-link>
+        <router-link to="/" class="d-inline-flex align-items-center" v-else>
+          <font-awesome-icon icon="arrow-left" />
+          <span class="ml-2">Volver</span>
+        </router-link>
+      </div>
     </div>
     <div class="vertical-rule bg-light mr-5 ml-5" v-show="!isVanillaRoute"></div>
     <router-view></router-view>
