@@ -7,10 +7,10 @@ import 'typeface-roboto'
 
 // send fa things to self script
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus, faArrowLeft, faThList } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faArrowLeft, faThList, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faPlus, faArrowLeft, faThList)
+library.add(faPlus, faArrowLeft, faThList, faSpinner)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

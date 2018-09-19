@@ -41,3 +41,9 @@ ul {
   background-color: #000;
   opacity: .5;
 }
+svg[data-icon="spinner"] {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

@@ -39,8 +39,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" @click="load">Cargar</button>
-        <button type="button" class="btn btn-secondary" @click="close">Cancelar</button>
+        <button type="button" class="btn btn-primary" @click="load" :disabled="salesLoading">
+          <font-awesome-icon v-if="salesLoading" icon="spinner" />
+          <span v-else>Cargar</span>
+        </button>
+        <button type="button" class="btn btn-secondary" @click="close" :disabled="salesLoading">Cancelar</button>
       </div>
     </div>
   </div>
@@ -48,6 +51,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { KEYS } from '@/store/constants'
 
 export default {
@@ -56,6 +60,7 @@ export default {
     price: null,
     type: 'efectivo'
   }),
+  computed: mapGetters(['salesLoading']),
   methods: {
     close () {
       this.$store.commit(KEYS.MODAL.CLOSE)
@@ -67,3 +72,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.modal-footer button {
+  width: 125px;
+}
+</style>

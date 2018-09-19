@@ -12,8 +12,11 @@
         <!-- todo: pseudocopy sales -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Cargar</button>
-        <button type="button" class="btn btn-secondary" @click="close">Cancelar</button>
+        <button type="button" class="btn btn-primary" :disabled="expensesLoading">
+          <font-awesome-icon v-if="expensesLoading" icon="spinner" />
+          <span v-else>Cargar</span>
+        </button>
+        <button type="button" class="btn btn-secondary" @click="close" :disabled="expensesLoading">Cancelar</button>
       </div>
     </div>
   </div>
@@ -21,10 +24,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { KEYS } from '@/store/constants'
 
 export default {
   name: 'ExpensesModal',
+  computed: mapGetters(['expensesLoading']),
   methods: {
     close () {
       this.$store.commit(KEYS.MODAL.CLOSE)
@@ -32,3 +37,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.modal-footer button {
+  width: 125px;
+}
+</style>

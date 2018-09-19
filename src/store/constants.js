@@ -7,11 +7,17 @@ export const KEYS = Object.freeze({
   SALES: {
     POST: 'postSale',
     UPDATE: 'updateSales',
-    GET: 'getSales'
+    GET: 'getSales',
+    LOADING: 'salesLoading',
+    LOADED: 'salesLoaded',
+    ERROR: 'salesError'
   },
   EXPENSES: {
     POST: 'postExpense',
     UPDATE: 'updateExpenses',
-    GET: 'getExpenses'
+    GET: 'getExpenses',
+    LOADING: 'expensesLoading',
+    LOADED: 'expensesLoaded',
+    ERROR: 'expensesError'
   }
 })
