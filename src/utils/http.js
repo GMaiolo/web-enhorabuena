@@ -12,7 +12,8 @@ class Http {
     this.http = instance
   }
 
-  getExpenses (date = today) {
+  getExpenses (date) {
+    date = date || today
     return this.http('/expenses', { params: { date } })
       .then(({ data: expenses }) => expenses)
   }
@@ -21,7 +22,8 @@ class Http {
     return this.http.post('/expenses', expense)
   }
 
-  getSales (date = today) {
+  getSales (date) {
+    date = date || today
     return this.http('/sales', { params: { date } })
       .then(({ data: sales }) => sales)
   }

@@ -8,7 +8,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { KEYS } from '@/store/constants'
 import ExpensesModal from '@/components/ExpensesModal.vue'
 import SalesModal from '@/components/SalesModal.vue'
 
@@ -25,7 +24,7 @@ export default {
   },
   methods: {
     closeModal () {
-      this.$store.commit(KEYS.MODAL.CLOSE)
+      this.$store.commit('closeModal')
     }
   }
 }

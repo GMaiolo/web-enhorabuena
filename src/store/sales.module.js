@@ -1,18 +1,23 @@
 import http from '../utils/http'
 import moment from 'moment'
-import { KEYS } from './constants'
+
+const baseFormat = 'DD-MM-YYYY'
+
+const today = moment().format(baseFormat)
 
 export default {
   state: {
     data: [],
+    date: today,
     loading: false
   },
   mutations: {
     salesLoading (state) {
       state.loading = true
     },
-    salesLoaded (state) {
+    salesLoaded (state, date) {
       state.loading = false
+      state.date = date || today
     },
     salesError (state, error) {
       console.log(error)
@@ -22,25 +27,35 @@ export default {
     }
   },
   actions: {
-    getSales ({ commit }) {
-      commit(KEYS.SALES.LOADING)
-      return http.getSales()
+    getSales ({ commit, state }, date = today) {
+      if (state.loading) return
+      commit('salesLoading')
+      return http.getSales(date)
         .then(sales => {
-          commit(KEYS.SALES.UPDATE, sales)
-          commit(KEYS.SALES.LOADED)
+          commit('updateSales', sales)
+          commit('salesLoaded', date)
         })
-        .catch(err => commit(KEYS.SALES.ERROR, err))
+        .catch(err => commit('salesError', err))
     },
     postSale ({ commit, dispatch }, sale) {
-      commit(KEYS.SALES.LOADING)
+      commit('salesLoading')
       return http.postSale(sale)
-        .then(() => dispatch(KEYS.SALES.GET))
-        .catch(err => commit(KEYS.SALES.ERROR, err))
+        .then(() => dispatch('getSales'))
+        .catch(err => commit('salesError', err))
+    },
+    nextSalesDate ({ dispatch, state }) {
+      const nextDate = moment(state.date, baseFormat).add(1, 'd').format(baseFormat)
+      dispatch('getSales', nextDate)
+    },
+    prevSalesDate ({ dispatch, state }) {
+      const prevDate = moment(state.date, baseFormat).subtract(1, 'd').format(baseFormat)
+      dispatch('getSales', prevDate)
     }
   },
   getters: {
     sales: (state) => state.data,
     salesLoading: (state) => state.loading,
+    currentSalesDate: (state) => state.date,
     totalSalesValue: (state) => state.data.reduce((a, b) => a + b.price, 0),
     lastSaleTime (state) {
       const lastSale = state.data[state.data.length - 1]

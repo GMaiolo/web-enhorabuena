@@ -1,5 +1,4 @@
 import http from '../utils/http'
-import { KEYS } from './constants'
 
 export default {
   state: {
@@ -22,19 +21,19 @@ export default {
   },
   actions: {
     getExpenses ({ commit }) {
-      commit(KEYS.EXPENSES.LOADING)
+      commit('expensesLoading')
       return http.getExpenses()
         .then(expenses => {
-          commit(KEYS.EXPENSES.UPDATE, expenses)
-          commit(KEYS.EXPENSES.LOADED)
+          commit('updateExpenses', expenses)
+          commit('expensesLoaded')
         })
-        .catch(err => commit(KEYS.EXPENSES.ERROR, err))
+        .catch(err => commit('expensesError', err))
     },
     postExpense ({ commit, dispatch }, expense) {
-      commit(KEYS.EXPENSES.LOADING)
+      commit('expensesLoading')
       return http.postExpense(expense)
-        .then(() => dispatch(KEYS.EXPENSES.GET))
-        .catch(err => commit(KEYS.EXPENSES.ERROR, err))
+        .then(() => dispatch('getExpenses'))
+        .catch(err => commit('expensesError', err))
     }
   },
   getters: {

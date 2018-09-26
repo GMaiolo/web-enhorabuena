@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <section class="wrapper m-0 row no-gutters px-sm-5 px-0">
+  <section class="wrapper h-100 m-0 row no-gutters px-sm-5 px-0">
     <!-- left side -->
     <div class="col-sm-12 col-md-6 mb-md-0 mb-sm-5 mb-5" v-show="!isShowingExpenses">
       <h3 class="mb-3">Agregar Venta</h3>
@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import { KEYS } from '@/store/constants'
 
 export default {
   name: 'Main',
@@ -53,15 +52,15 @@ export default {
   },
   methods: {
     openExpensesModal () {
-      this.$store.commit(KEYS.MODAL.OPEN_EXPENSES)
+      this.$store.commit('openExpensesModal')
     },
     openSalesModal () {
-      this.$store.commit(KEYS.MODAL.OPEN_SALES)
+      this.$store.commit('openSalesModal')
     }
   },
   beforeMount () {
-    this.$store.dispatch(KEYS.SALES.GET)
-    this.$store.dispatch(KEYS.EXPENSES.GET)
+    this.$store.dispatch('getSales')
+    this.$store.dispatch('getExpenses')
   }
 }
 </script>

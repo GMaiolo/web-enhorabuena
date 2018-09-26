@@ -25,14 +25,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { KEYS } from '@/store/constants'
 
 export default {
   name: 'ExpensesModal',
   computed: mapGetters(['expensesLoading']),
   methods: {
     close () {
-      this.$store.commit(KEYS.MODAL.CLOSE)
+      this.$store.commit('closeModal')
     }
   }
 }

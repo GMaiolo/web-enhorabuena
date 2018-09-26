@@ -52,7 +52,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { KEYS } from '@/store/constants'
 
 export default {
   name: 'SalesModal',
@@ -63,11 +62,11 @@ export default {
   computed: mapGetters(['salesLoading']),
   methods: {
     close () {
-      this.$store.commit(KEYS.MODAL.CLOSE)
+      this.$store.commit('closeModal')
     },
     load () {
-      this.$store.dispatch(KEYS.SALES.POST, { price: this.price, type: this.type })
-        .then(() => this.$store.commit(KEYS.MODAL.CLOSE))
+      this.$store.dispatch('postSale', { price: this.price, type: this.type })
+        .then(() => this.$store.commit('closeModal'))
     }
   }
 }
