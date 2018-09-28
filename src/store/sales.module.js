@@ -56,7 +56,13 @@ export default {
     sales: (state) => state.data,
     salesLoading: (state) => state.loading,
     currentSalesDate: (state) => state.date,
-    totalSalesValue: (state) => state.data.reduce((a, b) => a + b.price, 0),
+    totalSales: (state) => state.data.reduce((a, b) => a + (b.type !== 'diferencia' ? b.price : 0), 0),
+    totalSalesCash: (state) => state.data.reduce((a, b) => {
+      return a + (b.type === 'efectivo' ? b.price : 0)
+    }, 0),
+    totalSalesCard: (state) => state.data.reduce((a, b) => {
+      return a + (b.type !== 'efectivo' && b.type !== 'diferencia' ? b.price : 0)
+    }, 0),
     lastSaleTime (state) {
       const lastSale = state.data[state.data.length - 1]
       return lastSale && moment(lastSale.date).format('HH:mm')

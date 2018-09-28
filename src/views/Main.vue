@@ -16,6 +16,9 @@
           <span class="ml-2">Volver</span>
         </router-link>
       </div>
+      <div class="mt-5 d-flex align-items-center" v-if="isShowingSales">
+          <SaleTotals class="m-auto" />
+      </div>
     </div>
     <!-- right side -->
     <div class="col-sm-12 col-md-6" v-show="!isShowingSales">
@@ -39,9 +42,11 @@
 </template>
 
 <script>
+import SaleTotals from '@/components/SaleTotals.vue'
 
 export default {
   name: 'Main',
+  components: { SaleTotals },
   computed: {
     isShowingSales () {
       return this.$route.name === 'sales'

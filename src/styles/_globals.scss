@@ -19,6 +19,9 @@ ul {
     display: inline-block;
   }
 }
+.no-highlight {
+  user-select: none;
+}
 .pointer {
   cursor: pointer;
 }

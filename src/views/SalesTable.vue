@@ -1,13 +1,13 @@
 <template>
 <div class="w-100">
   <div class="date-nav row">
-    <div class="col pointer" @click="prevSalesDate()">
+    <div class="col pointer no-highlight" @click="prevSalesDate()">
       <font-awesome-icon icon="long-arrow-alt-left" />
       {{ previousDay }}
     </div>
     <!-- datepicker here <datepicker></datepicker> -->
-    <div class="col"><b>{{ currentDay }}</b></div>
-    <div class="col pointer" @click="nextSalesDate()">
+    <div class="col no-highlight"><b>{{ currentDay }}</b></div>
+    <div class="col pointer no-highlight" @click="nextSalesDate()">
       {{ nextDay }}
       <font-awesome-icon icon="long-arrow-alt-right" />
     </div>
@@ -30,10 +30,6 @@
       </tbody>
     </table>
   </div>
-  <div class="totals border-top d-flex align-items-center">
-    <!-- card/cash, expenses -->
-    <p class="m-auto"><b>Total ventas: </b><span>${{ totalSalesDisplay }}</span></p>
-  </div>
 </div>
 </template>
 
@@ -53,18 +49,20 @@ export default {
     Datepicker
   },
   filters: {
-    date: (rawDate) => moment(rawDate).format('HH:mm'),
-    salesDateDisplay: (date) => date.replace(/-/g, '/')
+    date: (rawDate) => moment(rawDate).format('HH:mm')
   },
-  methods: mapActions([ 'nextSalesDate', 'prevSalesDate' ]),
+  methods: mapActions([
+    'nextSalesDate',
+    'prevSalesDate'
+  ]),
   computed: {
     ...mapGetters([
       'sales',
-      'totalSalesValue',
+      'totalSales',
       'currentSalesDate'
     ]),
     totalSalesDisplay () {
-      return new Intl.NumberFormat({ style: 'currency' }).format(this.totalSalesValue)
+      return new Intl.NumberFormat({ style: 'currency' }).format(this.totalSales)
     },
     previousDay () {
       return moment(this.currentSalesDate, formats.in).subtract(1, 'd').format(formats.out)
@@ -84,9 +82,6 @@ export default {
   height: 5%;
 }
 .table-container {
-  height: 85%;
-}
-.totals {
-  height: 10%;
+  height: 95%;
 }
 </style>
