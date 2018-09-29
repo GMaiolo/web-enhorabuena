@@ -6,66 +6,63 @@ const baseFormat = 'DD-MM-YYYY'
 const today = moment().format(baseFormat)
 
 export default {
+  namespaced: true,
   state: {
     data: [],
     date: today,
     loading: false
   },
   mutations: {
-    salesLoading (state) {
+    loading (state) {
       state.loading = true
     },
-    salesLoaded (state, date) {
+    loaded (state, date) {
       state.loading = false
       state.date = date || today
     },
-    salesError (state, error) {
+    error (state, error) {
       console.log(error)
     },
-    updateSales (state, sales) {
+    update (state, sales) {
       state.data = sales
     }
   },
   actions: {
-    getSales ({ commit, state }, date = today) {
+    get ({ commit, state }, date = today) {
       if (state.loading) return
-      commit('salesLoading')
+      commit('loading')
       return http.getSales(date)
         .then(sales => {
-          commit('updateSales', sales)
-          commit('salesLoaded', date)
+          commit('update', sales)
+          commit('loaded', date)
         })
-        .catch(err => commit('salesError', err))
+        .catch(err => commit('error', err))
     },
-    postSale ({ commit, dispatch }, sale) {
-      commit('salesLoading')
+    post ({ commit, dispatch }, sale) {
+      commit('loading')
       return http.postSale(sale)
-        .then(() => dispatch('getSales'))
-        .catch(err => commit('salesError', err))
+        .then(() => dispatch('get'))
+        .catch(err => commit('error', err))
     },
-    nextSalesDate ({ dispatch, state }) {
+    nextDate ({ dispatch, state }) {
       const nextDate = moment(state.date, baseFormat).add(1, 'd').format(baseFormat)
-      dispatch('getSales', nextDate)
+      dispatch('get', nextDate)
     },
-    prevSalesDate ({ dispatch, state }) {
+    prevDate ({ dispatch, state }) {
       const prevDate = moment(state.date, baseFormat).subtract(1, 'd').format(baseFormat)
-      dispatch('getSales', prevDate)
+      dispatch('get', prevDate)
     }
   },
   getters: {
-    sales: (state) => state.data,
-    salesLoading: (state) => state.loading,
-    currentSalesDate: (state) => state.date,
-    totalSales: (state) => state.data.reduce((a, b) => a + (b.type !== 'diferencia' ? b.price : 0), 0),
-    totalSalesCash: (state) => state.data.reduce((a, b) => {
+    list: (state) => state.data,
+    loading: (state) => state.loading,
+    currentDate: (state) => state.date,
+    total: (state) => state.data.reduce((a, b) => a + (b.type !== 'diferencia' ? b.price : 0), 0),
+    totalCash: (state) => state.data.reduce((a, b) => {
       return a + (b.type === 'efectivo' ? b.price : 0)
     }, 0),
-    totalSalesCard: (state) => state.data.reduce((a, b) => {
+    totalCard: (state) => state.data.reduce((a, b) => {
       return a + (b.type !== 'efectivo' && b.type !== 'diferencia' ? b.price : 0)
-    }, 0),
-    lastSaleTime (state) {
-      const lastSale = state.data[state.data.length - 1]
-      return lastSale && moment(lastSale.date).format('HH:mm')
-    }
+    }, 0)
   }
 }

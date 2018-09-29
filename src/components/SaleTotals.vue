@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p><b>Total Efectivo: </b><span>$ {{ totalSalesCash }}</span></p>
-    <p><b>Total Tarjeta: </b><span>$ {{ totalSalesCard }}</span></p>
+    <p><b>Total Efectivo: </b><span>$ {{ totalCash }}</span></p>
+    <p><b>Total Tarjeta: </b><span>$ {{ totalCard }}</span></p>
     <hr>
-    <p><b>Total Ventas: </b><span>$ {{ totalSales }}</span></p>
+    <p><b>Total Ventas: </b><span>$ {{ total }}</span></p>
   </div>
 </template>
 
@@ -12,10 +12,10 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'sale-totals',
-  computed: mapGetters([
-    'totalSalesCash',
-    'totalSalesCard',
-    'totalSales'
-  ])
+  computed: mapGetters({
+    totalCash: 'sales/totalCash',
+    totalCard: 'sales/totalCard',
+    total: 'sales/total'
+  })
 }
 </script>

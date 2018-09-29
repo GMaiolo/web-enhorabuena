@@ -1,13 +1,13 @@
 <template>
 <div class="w-100">
   <div class="date-nav row">
-    <div class="col pointer no-highlight" @click="prevSalesDate()">
+    <div class="col pointer no-highlight" @click="prevDate()">
       <font-awesome-icon icon="long-arrow-alt-left" />
       {{ previousDay }}
     </div>
     <!-- datepicker here <datepicker></datepicker> -->
     <div class="col no-highlight"><b>{{ currentDay }}</b></div>
-    <div class="col pointer no-highlight" @click="nextSalesDate()">
+    <div class="col pointer no-highlight" @click="nextDate()">
       {{ nextDay }}
       <font-awesome-icon icon="long-arrow-alt-right" />
     </div>
@@ -51,27 +51,24 @@ export default {
   filters: {
     date: (rawDate) => moment(rawDate).format('HH:mm')
   },
-  methods: mapActions([
-    'nextSalesDate',
-    'prevSalesDate'
-  ]),
+  methods: mapActions({
+    nextDate: 'sales/nextDate',
+    prevDate: 'sales/prevDate'
+  }),
   computed: {
-    ...mapGetters([
-      'sales',
-      'totalSales',
-      'currentSalesDate'
-    ]),
-    totalSalesDisplay () {
-      return new Intl.NumberFormat({ style: 'currency' }).format(this.totalSales)
-    },
+    ...mapGetters({
+      sales: 'sales/list',
+      total: 'sales/total',
+      currentDate: 'sales/currentDate'
+    }),
     previousDay () {
-      return moment(this.currentSalesDate, formats.in).subtract(1, 'd').format(formats.out)
+      return moment(this.currentDate, formats.in).subtract(1, 'd').format(formats.out)
     },
     currentDay () {
-      return moment(this.currentSalesDate, formats.in).format(formats.out)
+      return moment(this.currentDate, formats.in).format(formats.out)
     },
     nextDay () {
-      return moment(this.currentSalesDate, formats.in).add(1, 'd').format(formats.out)
+      return moment(this.currentDate, formats.in).add(1, 'd').format(formats.out)
     }
   }
 }

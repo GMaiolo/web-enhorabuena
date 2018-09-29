@@ -39,11 +39,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" @click="load" :disabled="salesLoading">
-          <font-awesome-icon v-if="salesLoading" icon="spinner" />
+        <button type="button" class="btn btn-primary" @click="load" :disabled="loading">
+          <font-awesome-icon v-if="loading" icon="spinner" />
           <span v-else>Cargar</span>
         </button>
-        <button type="button" class="btn btn-secondary" @click="close" :disabled="salesLoading">Cancelar</button>
+        <button type="button" class="btn btn-secondary" @click="close" :disabled="loading">Cancelar</button>
       </div>
     </div>
   </div>
@@ -59,13 +59,15 @@ export default {
     price: null,
     type: 'efectivo'
   }),
-  computed: mapGetters(['salesLoading']),
+  computed: mapGetters({
+    loading: 'sales/loading'
+  }),
   methods: {
     close () {
       this.$store.commit('closeModal')
     },
     load () {
-      this.$store.dispatch('postSale', { price: this.price, type: this.type })
+      this.$store.dispatch('sale/post', { price: this.price, type: this.type })
         .then(() => this.$store.commit('closeModal'))
     }
   }

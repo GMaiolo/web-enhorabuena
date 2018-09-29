@@ -64,7 +64,7 @@ export default {
     }
   },
   beforeMount () {
-    this.$store.dispatch('getSales')
+    this.$store.dispatch('sales/get')
     this.$store.dispatch('getExpenses')
   }
 }
