@@ -7,6 +7,11 @@ const instance = axios.create({
   baseURL: 'https://enhorabuena.gmaiolo.com'
 })
 
+instance.interceptors.response.use(
+  response => response.data,
+  err => Promise.reject(err.response)
+)
+
 class Http {
   constructor (instance) {
     this.http = instance
@@ -15,7 +20,6 @@ class Http {
   getExpenses (date) {
     date = date || today
     return this.http('/expenses', { params: { date } })
-      .then(({ data: expenses }) => expenses)
   }
 
   postExpense (expense) {
@@ -25,7 +29,6 @@ class Http {
   getSales (date) {
     date = date || today
     return this.http('/sales', { params: { date } })
-      .then(({ data: sales }) => sales)
   }
 
   postSale (sale) {

@@ -23,7 +23,9 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'ExpensesTable',
   computed: {
-    ...mapGetters([ 'expenses' ])
+    ...mapGetters({
+      expenses: 'expenses/list'
+    })
   }
 }
 </script>

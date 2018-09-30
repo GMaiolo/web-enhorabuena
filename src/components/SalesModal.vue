@@ -11,7 +11,7 @@
       <div class="modal-body">
         <div class="input-group w-50 m-auto">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">$</span>
+            <span class="input-group-text">$</span>
           </div>
           <input type="number" class="form-control" placeholder="Precio" v-model.number="price">
           <!-- 1: add payments input here @ credit -->
@@ -39,11 +39,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" @click="load" :disabled="loading">
-          <font-awesome-icon v-if="loading" icon="spinner" />
+        <button type="button" class="btn btn-primary" @click="load" :disabled="posting">
+          <font-awesome-icon v-if="posting" icon="spinner" />
           <span v-else>Cargar</span>
         </button>
-        <button type="button" class="btn btn-secondary" @click="close" :disabled="loading">Cancelar</button>
+        <button type="button" class="btn btn-secondary" @click="close" :disabled="posting">Cancelar</button>
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@ export default {
     price: null,
     type: 'efectivo'
   }),
-  computed: mapGetters('sales', [ 'loading' ]),
+  computed: mapGetters('sales', [ 'posting' ]),
   methods: {
     ...mapMutations('modal', [ 'close' ]),
     ...mapActions('sales', [ 'post' ]),

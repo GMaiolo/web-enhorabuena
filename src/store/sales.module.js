@@ -4,17 +4,24 @@ export default {
   namespaced: true,
   state: {
     data: [],
-    loading: false
+    getting: false,
+    posting: false
   },
   mutations: {
-    loading (state) {
-      state.loading = true
+    getting (state) {
+      state.getting = true
     },
-    loaded (state) {
-      state.loading = false
+    gotten (state) {
+      state.getting = false
+    },
+    posting (state) {
+      state.posting = true
+    },
+    posted (state) {
+      state.posting = false
     },
     error (state, error) {
-      console.log(error)
+      console.error(error.data.error)
     },
     update (state, sales) {
       state.data = sales
@@ -22,24 +29,27 @@ export default {
   },
   actions: {
     get ({ commit, state }, date) {
-      commit('loading')
+      commit('getting')
       return http.getSales(date)
         .then(sales => {
           commit('update', sales)
-          commit('loaded')
+          commit('gotten')
         })
         .catch(err => commit('error', err))
     },
     post ({ commit, dispatch }, sale) {
-      commit('loading')
+      commit('posting')
       return http.postSale(sale)
         .then(() => dispatch('get'))
         .catch(err => commit('error', err))
+        .then(() => commit('posted'))
     }
   },
   getters: {
     list: (state) => state.data,
-    loading: (state) => state.loading, // loading para get y otro pa post y unirlos
+    getting: (state) => state.getting,
+    posting: (state) => state.posting,
+    loading: (state) => state.getting || state.posting,
     total: (state) => state.data.reduce((a, b) => a + (b.type !== 'diferencia' ? b.price : 0), 0),
     totalCash: (state) => state.data.reduce((a, b) => {
       return a + (b.type === 'efectivo' ? b.price : 0)

@@ -31,21 +31,21 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    nextDate ({ state, commit, dispatch, getters }) {
-      if(getters.loading) return
-      commit('nextDate')
+    getAll ({ dispatch }, date) {
       return Promise.all([
-        dispatch('sales/get', state.date, { root: true })
-        // dispatch('expenses/get', state.date, { root: true })
+        dispatch('sales/get', date),
+        dispatch('expenses/get', date)
       ])
     },
+    nextDate ({ state, commit, dispatch, getters }) {
+      if (getters.loading) return
+      commit('nextDate')
+      return dispatch('getAll', state.date)
+    },
     prevDate ({ state, commit, dispatch, getters }) {
-      if(getters.loading) return
+      if (getters.loading) return
       commit('prevDate')
-      return Promise.all([
-        dispatch('sales/get', state.date, { root: true })
-        // dispatch('expenses/get', state.date, { root: true })
-      ])
+      return dispatch('getAll', state.date)
     }
   },
   getters: {

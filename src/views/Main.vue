@@ -61,8 +61,7 @@ export default {
     openSalesModal: 'openSales'
   }),
   beforeMount () {
-    this.$store.dispatch('sales/get')
-    this.$store.dispatch('expenses/get')
+    this.$store.dispatch('getAll')
   }
 }
 </script>
