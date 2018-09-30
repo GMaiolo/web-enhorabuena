@@ -17,7 +17,7 @@
         </router-link>
       </div>
       <div class="mt-5 d-flex align-items-center" v-if="isShowingSales">
-          <SaleTotals class="m-auto" />
+        <SaleTotals class="m-auto" />
       </div>
     </div>
     <!-- right side -->
@@ -36,7 +36,11 @@
         </router-link>
       </div>
     </div>
-    <router-view class="col-sm-12 col-md-6"></router-view>
+    <div class="col-sm-12 col-md-6">
+      <DateNav></DateNav>
+      <!-- this should be Details view -->
+      <router-view></router-view>
+    </div>
   </section>
 </div>
 </template>
@@ -44,10 +48,11 @@
 <script>
 import { mapMutations } from 'vuex'
 import SaleTotals from '@/components/SaleTotals.vue'
+import DateNav from '@/components/DateNav.vue'
 
 export default {
   name: 'Main',
-  components: { SaleTotals },
+  components: { SaleTotals, DateNav },
   computed: {
     isShowingSales () {
       return this.$route.name === 'sales'
@@ -61,6 +66,7 @@ export default {
     openSalesModal: 'openSales'
   }),
   beforeMount () {
+    console.log(this.$route.name)
     this.$store.dispatch('getAll')
   }
 }
