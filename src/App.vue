@@ -14,7 +14,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'app',
   components: { NavBar, Modal },
-  computed: mapGetters([ 'activeModal' ])
+  computed: mapGetters('modal', { activeModal: 'active' })
 }
 </script>
 

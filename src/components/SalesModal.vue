@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'SalesModal',
@@ -59,16 +59,13 @@ export default {
     price: null,
     type: 'efectivo'
   }),
-  computed: mapGetters({
-    loading: 'sales/loading'
-  }),
+  computed: mapGetters('sales', [ 'loading' ]),
   methods: {
-    close () {
-      this.$store.commit('closeModal')
-    },
+    ...mapMutations('modal', [ 'close' ]),
+    ...mapActions('sales', [ 'post' ]),
     load () {
-      this.$store.dispatch('sale/post', { price: this.price, type: this.type })
-        .then(() => this.$store.commit('closeModal'))
+      this.post({ price: this.price, type: this.type })
+        .then(this.close)
     }
   }
 }

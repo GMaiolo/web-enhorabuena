@@ -4,21 +4,24 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default {
+  namespaced: true,
   state: {
-    activeModal: null
+    active: null
   },
   mutations: {
-    openSalesModal (state) {
-      state.activeModal = 'sales'
+    openSales (state) {
+      state.active = 'sales'
     },
-    openExpensesModal (state) {
-      state.activeModal = 'expenses'
+    openExpenses (state) {
+      state.active = 'expenses'
     },
-    closeModal (state) {
-      state.activeModal = null
+    close (state) {
+      state.active = null
     }
   },
   getters: {
-    activeModal: (state) => state.activeModal
+    active: (state) => state.active,
+    salesActive: (state) => state.active === 'sales',
+    expensesActive: (state) => state.active === 'expenses'
   }
 }

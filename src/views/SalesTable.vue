@@ -52,14 +52,14 @@ export default {
     date: (rawDate) => moment(rawDate).format('HH:mm')
   },
   methods: mapActions({
-    nextDate: 'sales/nextDate',
-    prevDate: 'sales/prevDate'
+    nextDate: 'nextDate',
+    prevDate: 'prevDate'
   }),
   computed: {
     ...mapGetters({
       sales: 'sales/list',
       total: 'sales/total',
-      currentDate: 'sales/currentDate'
+      currentDate: 'date'
     }),
     previousDay () {
       return moment(this.currentDate, formats.in).subtract(1, 'd').format(formats.out)

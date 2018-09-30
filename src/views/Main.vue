@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import SaleTotals from '@/components/SaleTotals.vue'
 
 export default {
@@ -55,17 +56,13 @@ export default {
       return this.$route.name === 'expenses'
     }
   },
-  methods: {
-    openExpensesModal () {
-      this.$store.commit('openExpensesModal')
-    },
-    openSalesModal () {
-      this.$store.commit('openSalesModal')
-    }
-  },
+  methods: mapMutations('modal', {
+    openExpensesModal: 'openExpenses',
+    openSalesModal: 'openSales'
+  }),
   beforeMount () {
     this.$store.dispatch('sales/get')
-    this.$store.dispatch('getExpenses')
+    this.$store.dispatch('expenses/get')
   }
 }
 </script>

@@ -1,44 +1,45 @@
 import http from '../utils/http'
 
 export default {
+  namespaced: true,
   state: {
     data: [],
     loading: false
   },
   mutations: {
-    expensesLoading (state) {
+    loading (state) {
       state.loading = true
     },
-    expensesLoaded (state) {
+    loaded (state) {
       state.loading = false
     },
-    expensesError (state, error) {
+    error (state, error) {
       console.log(error)
     },
-    updateExpenses (state, expenses) {
+    update (state, expenses) {
       state.data = expenses
     }
   },
   actions: {
-    getExpenses ({ commit }) {
-      commit('expensesLoading')
+    get ({ commit }) {
+      commit('loading')
       return http.getExpenses()
         .then(expenses => {
-          commit('updateExpenses', expenses)
-          commit('expensesLoaded')
+          commit('update', expenses)
+          commit('loaded')
         })
-        .catch(err => commit('expensesError', err))
+        .catch(err => commit('error', err))
     },
-    postExpense ({ commit, dispatch }, expense) {
-      commit('expensesLoading')
+    post ({ commit, dispatch }, expense) {
+      commit('loading')
       return http.postExpense(expense)
-        .then(() => dispatch('getExpenses'))
-        .catch(err => commit('expensesError', err))
+        .then(() => dispatch('get'))
+        .catch(err => commit('error', err))
     }
   },
   getters: {
-    expenses: (state) => state.data,
-    expensesLoading: (state) => state.loading,
-    totalExpensesValue: (state) => state.data.reduce((a, b) => a + b.price, 0)
+    list: (state) => state.data,
+    loading: (state) => state.loading,
+    total: (state) => state.data.reduce((a, b) => a + b.price, 0)
   }
 }

@@ -1,13 +1,13 @@
 <template>
 <div>
-  <div class="backdrop" @click="closeModal"></div>
-  <ExpensesModal v-if="expensesModalActive" />
-  <SalesModal v-else-if="salesModalActive" />
+  <div class="backdrop" @click="close()"></div>
+  <ExpensesModal v-if="expensesActive" />
+  <SalesModal v-else-if="salesActive" />
 </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import ExpensesModal from '@/components/ExpensesModal.vue'
 import SalesModal from '@/components/SalesModal.vue'
 
@@ -17,15 +17,7 @@ export default {
     ExpensesModal,
     SalesModal
   },
-  computed: {
-    ...mapGetters([ 'activeModal' ]),
-    salesModalActive () { return this.activeModal === 'sales' },
-    expensesModalActive () { return this.activeModal === 'expenses' }
-  },
-  methods: {
-    closeModal () {
-      this.$store.commit('closeModal')
-    }
-  }
+  computed: mapGetters('modal', [ 'salesActive', 'expensesActive' ]),
+  methods: mapMutations('modal', [ 'close' ])
 }
 </script>
