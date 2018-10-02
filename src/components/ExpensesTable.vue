@@ -1,5 +1,5 @@
 <template>
-<div class="w-100 o-auto">
+<div class="table-container o-auto">
   <table class="table table-sm table-bordered table-hover m-0">
     <thead>
       <tr>
@@ -21,11 +21,15 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'ExpensesTable',
-  computed: {
-    ...mapGetters({
-      expenses: 'expenses/list'
-    })
-  }
+  name: 'expenses-table',
+  computed: mapGetters({
+    expenses: 'expenses/list'
+  })
 }
 </script>
+
+<style lang="scss" scoped>
+.table-container {
+  height: calc(100% - 100px);
+}
+</style>

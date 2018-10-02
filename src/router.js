@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Main from './views/Main.vue'
-import SalesTable from './views/SalesTable.vue'
-import ExpensesTable from './views/ExpensesTable.vue'
+import Main from './views/Main'
 
 Vue.use(Router)
 
@@ -10,21 +8,9 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/:type?',
       name: 'main',
-      component: Main,
-      children: [
-        {
-          path: 'sales',
-          name: 'sales',
-          component: SalesTable
-        },
-        {
-          path: 'expenses',
-          name: 'expenses',
-          component: ExpensesTable
-        }
-      ]
+      component: Main
     }
   ]
 })

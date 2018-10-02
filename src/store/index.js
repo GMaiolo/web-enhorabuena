@@ -21,6 +21,9 @@ export default new Vuex.Store({
     date: today
   },
   mutations: {
+    setDate (state, date) {
+      state.date = date
+    },
     nextDate (state) {
       const next = moment(state.date, dateFormat).add(1, 'd').format(dateFormat)
       state.date = next
@@ -36,6 +39,10 @@ export default new Vuex.Store({
         dispatch('sales/get', date),
         dispatch('expenses/get', date)
       ])
+    },
+    reset ({ dispatch, commit }) {
+      commit('setDate', today)
+      return dispatch('getAll', today)
     },
     nextDate ({ state, commit, dispatch, getters }) {
       if (getters.loading) return

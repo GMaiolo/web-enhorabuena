@@ -1,6 +1,5 @@
 <template>
-<div class="w-100">
-  <div class="date-nav row">
+  <div class="date-nav row d-flex align-items-center">
     <div class="col pointer no-highlight" @click="prevDate()">
       <font-awesome-icon icon="long-arrow-alt-left" />
       {{ previousDay }}
@@ -12,29 +11,9 @@
       <font-awesome-icon icon="long-arrow-alt-right" />
     </div>
   </div>
-  <div class="table-container o-auto">
-    <table class="table table-sm table-bordered table-hover m-0">
-      <thead>
-        <tr>
-          <th scope="col">Hora</th>
-          <th scope="col">Monto</th>
-          <th scope="col">Tipo de pago</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="sale in sales" :key="sale._id">
-          <th scope="row">{{ sale.date | date }}</th>
-          <td>$ {{ sale.price }}</td>
-          <td>{{ sale.type }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
 import { mapGetters, mapActions } from 'vuex'
 import moment from 'moment'
 
@@ -44,21 +23,13 @@ const formats = {
 }
 
 export default {
-  name: 'SalesTable',
-  components: {
-    Datepicker
-  },
-  filters: {
-    date: (rawDate) => moment(rawDate).format('HH:mm')
-  },
+  name: 'date-nav',
   methods: mapActions({
     nextDate: 'nextDate',
     prevDate: 'prevDate'
   }),
   computed: {
     ...mapGetters({
-      sales: 'sales/list',
-      total: 'sales/total',
       currentDate: 'date'
     }),
     previousDay () {
@@ -76,9 +47,6 @@ export default {
 
 <style lang="scss" scoped>
 .date-nav {
-  height: 5%;
-}
-.table-container {
-  height: 95%;
+  height: 50px;
 }
 </style>

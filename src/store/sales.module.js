@@ -28,7 +28,7 @@ export default {
     }
   },
   actions: {
-    get ({ commit, state }, date) {
+    get ({ commit }, date) {
       commit('getting')
       return http.getSales(date)
         .then(sales => {
@@ -46,6 +46,7 @@ export default {
     }
   },
   getters: {
+    quantity: (state) => state.data.length,
     list: (state) => state.data,
     getting: (state) => state.getting,
     posting: (state) => state.posting,
