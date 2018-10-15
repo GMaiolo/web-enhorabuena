@@ -2,7 +2,7 @@
   <div>
     <DateNav />
     <component :is="`${type}-table`"></component>
-    <div class="bottom-nav row d-flex align-items-center">
+    <div class="bottom-nav row w-100 m-0 d-flex align-items-center">
       <router-link to="/sales" class="col">Ventas (<b>{{ salesQuantity }}</b>)</router-link>
       <router-link to="/expenses" class="col">Gastos (<b>{{ expensesQuantity }}</b>)</router-link>
     </div>

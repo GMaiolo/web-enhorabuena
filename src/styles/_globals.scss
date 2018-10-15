@@ -24,15 +24,17 @@ ul {
 }
 .pointer {
   cursor: pointer;
+  &-events-0 {
+    pointer-events: none;
+  }
 }
-.pointer-events-0 {
-  pointer-events: none;
-}
-.o-auto {
-  overflow: auto;
-}
-.o-hidden {
-  overflow: hidden;
+.o {
+  &-auto {
+    overflow: auto;
+  }
+  &-hidden {
+    overflow: hidden;
+  }
 }
 .blurred {
   filter: blur(5px);

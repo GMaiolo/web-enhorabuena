@@ -1,13 +1,17 @@
 <template>
-  <div class="date-nav row d-flex align-items-center">
-    <div class="col pointer no-highlight" @click="prevDate()">
+  <div class="date-nav w-100 m-0 row d-flex align-items-center">
+    <div class="col pl-0 pointer no-highlight" @click="prevDate()">
       <font-awesome-icon icon="long-arrow-alt-left" />
-      {{ previousDay }}
+      <span class="day mx-1 d-none d-lg-inline">{{ prev.day }}</span>
+      <span class="date d-inline d-md-none d-lg-inline">{{ prev.date }}</span>
     </div>
-    <!-- datepicker here <datepicker></datepicker> -->
-    <div class="col no-highlight"><b>{{ currentDay }}</b></div>
-    <div class="col pointer no-highlight" @click="nextDate()">
-      {{ nextDay }}
+    <div class="col no-highlight font-weight-bold">
+      <span class="day mr-1 d-none d-lg-inline">{{ current.day }}</span>
+      <span class="date">{{ current.date }}</span>
+    </div>
+    <div class="col pr-0 pointer no-highlight" @click="nextDate()">
+      <span class="day mr-1 d-none d-lg-inline">{{ next.day }}</span>
+      <span class="date mr-1 d-inline d-md-none d-lg-inline">{{ next.date }}</span>
       <font-awesome-icon icon="long-arrow-alt-right" />
     </div>
   </div>
@@ -19,7 +23,7 @@ import moment from 'moment'
 
 const formats = {
   in: 'DD-MM-YYYY',
-  out: 'DD/MM/YYYY'
+  out: 'DD/MM/YY'
 }
 
 export default {
@@ -32,14 +36,23 @@ export default {
     ...mapGetters({
       currentDate: 'date'
     }),
-    previousDay () {
-      return moment(this.currentDate, formats.in).subtract(1, 'd').format(formats.out)
+    prev () {
+      return {
+        date: moment(this.currentDate, formats.in).subtract(1, 'd').format(formats.out),
+        day: moment(this.currentDate, formats.in).subtract(1, 'd').format('ddd')
+      }
     },
-    currentDay () {
-      return moment(this.currentDate, formats.in).format(formats.out)
+    current () {
+      return {
+        date: moment(this.currentDate, formats.in).format(formats.out),
+        day: moment(this.currentDate, formats.in).format('ddd')
+      }
     },
-    nextDay () {
-      return moment(this.currentDate, formats.in).add(1, 'd').format(formats.out)
+    next () {
+      return {
+        date: moment(this.currentDate, formats.in).add(1, 'd').format(formats.out),
+        day: moment(this.currentDate, formats.in).add(1, 'd').format('ddd')
+      }
     }
   }
 }

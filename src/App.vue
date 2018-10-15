@@ -19,8 +19,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../node_modules/bootstrap/scss/bootstrap.scss';
-@import './styles/_globals.scss';
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import './styles/globals';
 
 $nav-height: 80px;
 .nav {

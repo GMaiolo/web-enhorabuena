@@ -2,7 +2,7 @@
 <div class="container">
   <section class="wrapper h-100 m-0 row no-gutters px-sm-5 px-0">
     <!-- left side -->
-    <div class="col-sm-12 col-md-6 mb-md-0 mb-sm-5 mb-5" v-show="type != 'expenses'">
+    <div class="col-sm-12 col-md-6 mb-5" v-show="type != 'expenses'">
       <div class="mb-5" v-if="isToday">
         <h3 class="mb-3">Agregar Venta</h3>
         <button class="circled btn btn-primary" @click="openSalesModal">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <!-- right side -->
-    <div class="col-sm-12 col-md-6" v-show="type != 'sales'">
+    <div class="col-sm-12 col-md-6 mb-5" v-show="type != 'sales'">
       <div class="mb-5" v-if="isToday">
         <h3 class="mb-3">Agregar Gasto</h3>
         <button class="circled btn btn-primary" @click="openExpensesModal">
@@ -75,9 +75,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../styles/media';
+
+.wrapper > div {
+  min-height: 50%;
+}
+
 .container {
   z-index: 0;
   padding: 7rem 0;
+  @include media-below(sm) {
+    padding: 3rem 0;
+  }
 }
 .circled {
   border-radius: 50%;
